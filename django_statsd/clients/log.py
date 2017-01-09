@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import logging
 
 from django_statsd.clients.null import StatsClient
@@ -24,3 +25,7 @@ class StatsClient(StatsClient):
         """Set a gauge value."""
         log.info('Gauge: %s, %s%s, %s' % (
             stat, '' if not delta else 'diff ', value, rate))
+
+    @contextmanager
+    def pipeline(self):
+        yield self
